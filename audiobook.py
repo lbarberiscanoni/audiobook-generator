@@ -1,18 +1,14 @@
-import subprocess
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-
+import subprocess
 import time
-import sys
-from os.path import expanduser
-home = expanduser("~")
+import os
 
 def pdfToText():
     browser = webdriver.Chrome()
     browser.get("http://www.zamzar.com/convert/pdf-to-txt/")
     fileInpt = browser.find_element_by_id("inputFile")
-    fileInpt.click()
-    fileInpt.send_keys(home + "/Lorenzo/Github/audiobook-generator/project1.pdf")
+    fileInpt.send_keys(os.getcwd() + "/project1.pdf")
     formatInpt = browser.find_element_by_id("toExtensionSel")
     formatInpt.send_keys("txt")
     emailInpt = browser.find_element_by_id("toEmail")
