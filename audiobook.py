@@ -4,6 +4,9 @@ import subprocess
 import time
 import os
 
+sourceDir = "papers"
+destDir = "audiobooks"
+
 def pdfToText():
     browser = webdriver.Chrome()
     browser.get("http://www.zamzar.com/convert/pdf-to-txt/")
@@ -16,9 +19,14 @@ def pdfToText():
     convertBtn = browser.find_element_by_id("uploadButton")
     convertBtn.click()
     time.sleep(2)
-    browser.close()
 
-def churn():
-    subprocess.call("say -v Daniel -f test.txt -o bitch.m4a")
+def findFile():
+    paperList = subprocess.check_output("ls " + sourceDir + "/", shell=True)
+    paperList = paperList.split("\n")
+    paperList = paperList[0:len(paperList) - 1]
+    
+    for paper in paperList:
+        print "doing", paper
+        subprocess.call("say -v Daniel -f " + sourceDir + "/" + paper + " -o " + destDir + "/" + paper.replace(".txt", "") + ".m4a", shell=True)
 
-pdfToText()
+findFile()
